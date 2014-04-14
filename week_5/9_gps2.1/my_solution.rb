@@ -2,19 +2,45 @@
 
 # I worked on this challenge with: 
 
-
+#Carl Krause
 
 
 
 
 # Our Refactored Solution
+def bakery_num(num_of_people, fav_food) 
+  serving_size = {"pie" => 8, "cake" => 6, "cookie" => 1} # establishes hash which describes serving size for each baked good
+  quantity_needed = {
+      "pie" => 0,
+      "cake"=> 0,
+      "cookie"=> 0
+  }
+ 
+#
+  if serving_size.has_key?(fav_food) == false
+       raise ArgumentError.new("You can't make that food")
+  end
 
+        if num_of_people > serving_size[fav_food]
+            quantity_needed[fav_food] = num_of_people / serving_size[fav_food]
+            num_of_people = num_of_people % serving_size[fav_food]
+        end
+        while num_of_people > 0
+                if num_of_people / serving_size["pie"] > 0 # if serving size of pie goes into number of people
+                    quantity_needed["pie"] += num_of_people / serving_size["pie"] # determines how many pies to make
+                    num_of_people = num_of_people % serving_size["pie"] # how many people are left hungry
+                elsif num_of_people / serving_size["cake"] > 0 # takes new number of hungry people
+                    quantity_needed["cake"] += num_of_people / serving_size["cake"]
+                    num_of_people = num_of_people % serving_size["cake"] # finds new value of remaining hungry people
+                else
+                    quantity_needed["cookie"] = num_of_people # everybody else gets cookies
+                    num_of_people = 0 # everybody has received something; while loop ends
+                end
+            end
+            return "You need to make #{quantity_needed["pie"]} pie(s), #{quantity_needed["cake"]} cake(s), and #{quantity_needed["cookie"]} cookie(s)." # returns quantities of baked goods we need to make in a string
+        
 
-
-
-
-
-
+end
 
 
 #DRIVER CODE-- DO NOT MODIFY ANYTHING BELOW THIS LINE (except in the section at the bottom)
@@ -35,5 +61,8 @@ p bakery_num(41, "cake") == "You need to make 5 pie(s), 0 cake(s), and 1 cookie(
 
 #  Reflection 
 
-
+# I had a very successful pairing session with Karl.  We did a good job refactoring the code
+# there were a few points that we got stuck on but we were able to work past it.  I thought there was some issue with the driver code
+# because the first one only lists out the cakes when the way the program is written prints out every type.  The code could be further
+# improved for the first driver if for each of the types it added to the string that was returned at the end
 
